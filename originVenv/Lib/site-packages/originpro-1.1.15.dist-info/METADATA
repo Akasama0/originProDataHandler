@@ -1,0 +1,75 @@
+Metadata-Version: 2.2
+Name: originpro
+Version: 1.1.15
+Summary: OriginPro Utilities
+Home-page: https://www.originlab.com
+Author: OriginLab
+Author-email: tech@originlab.com
+License: BSD
+Keywords: Origin,Originlab
+Platform: Windows
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: BSD License
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Requires-Dist: OriginExt>=1.2.5
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: license
+Dynamic: platform
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+## originpro
+
+This package contains a high-level API for interacting with the Origin software via the Origin Automation Server COM interface. Functionality includes (but is not limited to) reading, writing, and modifying data and creating and exporting graphs. An instance of Origin is launched (either visible or hidden) when using this package.
+
+### Installation
+This package is Windows only and requires a local installation of Origin 2021 or later.
+
+To install the package, run:
+```
+pip install originpro
+```
+
+As part of the installation, the [OriginExt package](https://pypi.org/project/OriginExt/) will also be installed.
+
+### Documentation
+Documentation and examples are available in the [OriginLab External Python Documentation](https://www.originlab.com/doc/ExternalPython).
+
+### Support
+Support is available on the [Origin Forum for Python](https://my.originlab.com/forum/forum.asp?FORUM_ID=29).
+
+### Simple Example
+```python
+import os
+import originpro as op
+
+op.set_show()
+
+x_vals = [1,2,3,4,5,6,7,8,9,10]
+y_vals = [23,45,78,133,178,199,234,278,341,400]
+
+wks = op.new_sheet('w')
+
+wks.from_list(0, x_vals, 'X Values')
+wks.from_list(1, y_vals, 'Y Values')
+
+gp = op.new_graph()
+gl = gp[0]
+gl.add_plot(wks, 1, 0)
+gl.rescale()
+
+fpath = op.path('u') + 'simple.png'
+gp.save_fig(fpath)
+print(f'{gl} is exported as {fpath}')
+
+op.exit()
+```
