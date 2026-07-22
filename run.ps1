@@ -1,0 +1,1 @@
+originVenv\Scripts\python.exe gui.py
